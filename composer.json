@@ -1,0 +1,23 @@
+{
+  "name": "circli/testing",
+  "description": "Package to circli framework with testing",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andreas Sundqvist",
+      "email": "andreas@oak-valley.se"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "phpunit/phpunit": "~8.0",
+    "psr/http-message": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Circli\\Testing\\": "src/"
+    }
+  }
+}
