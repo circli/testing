@@ -7,8 +7,6 @@ use Circli\Testing\Loader;
 
 trait ModuleLoaderTrait
 {
-	protected $module;
-
 	protected static $pathCache = [];
 	protected function getModuleBasePath()
 	{
