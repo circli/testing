@@ -6,6 +6,13 @@ interface Loader
 {
 	public function loadJson(string $file): array;
 
+	/**
+	 *  Returns contents of requested file
+	 *
+	 * @return mixed
+	 */
+	public function loadFile(string $file);
+	
 	public function loadRequest(string $file): array;
 
 	/**

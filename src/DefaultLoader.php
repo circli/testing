@@ -23,6 +23,15 @@ final class DefaultLoader implements Loader
 		throw new FileNotFound($path);
 	}
 
+	public function loadFile(string $file)
+	{
+		$path = $this->basePath . '/' . $file;
+		if (file_exists($path)) {
+			return (string)file_get_contents($path);
+		}
+		throw new FileNotFound($path);
+	}
+
 	public function loadRequest(string $file): array
 	{
 		$info = $this->loadJson($file);
