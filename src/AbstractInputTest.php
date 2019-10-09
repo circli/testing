@@ -48,13 +48,20 @@ abstract class AbstractInputTest extends TestCase
 
 		$inputs = [];
 		foreach ($this->inputs as $cls => $data) {
+			$attributes = [];
+			if (is_array($data)) {
+				if (is_array($data[1])) {
+					$attributes = $data[1];
+					$data = $data[0];
+				}
+			}
 			if (is_string($data)) {
 				$files = $this->getLoader()->getFiles($data);
 				foreach ($files as $file) {
 					$inputs[] = [
 						$cls,
 						$file,
-						[],
+						$attributes,
 					];
 				}
 			}
@@ -62,7 +69,7 @@ abstract class AbstractInputTest extends TestCase
 				$inputs[] = [
 					$cls,
 					$data[0],
-					$data[1] ?? [],
+					$attributes,
 				];
 			}
 		}
