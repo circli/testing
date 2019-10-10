@@ -10,7 +10,7 @@ final class HttpStatusClassifier implements Classifier
 	public function classify($requestData): void
 	{
 		if (is_string($requestData)) {
-			$rs = preg_match('/(\d{3})\_([^eb_])/', ltrim($requestData, '/'), $m);
+			$rs = preg_match('/(\d{3})\_/', ltrim($requestData, '/'), $m);
 			if ($rs) {
 				$this->expectException = $m[1] >= 400;
 				$this->expectedStatuseCode = (int)$m[1];
