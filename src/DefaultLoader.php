@@ -51,8 +51,12 @@ final class DefaultLoader implements Loader
 	 * @param string $path
 	 * @return string[]
 	 */
-	public function getFiles(string $path): array
+	public function getFiles(string $path, ?callable $filter = null): array
 	{
+		$filter = $filter ?? static function ($file) {
+			return strpos($file, '_m_') !== 3;
+		};
+
 		$baseLength = \strlen($this->basePath) + 1;
 		$resourcePath = $this->basePath . "/$path/*";
 		return array_filter(
@@ -62,9 +66,7 @@ final class DefaultLoader implements Loader
 				},
 				glob($resourcePath)
 			),
-			static function ($file) {
-				return strpos($file, '_m_') !== 3;
-			}
+			$filter
 		);
 	}
 }

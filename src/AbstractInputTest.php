@@ -8,6 +8,7 @@ use Circli\Testing\Traits\CreateRequestTrait;
 abstract class AbstractInputTest extends TestCase
 {
 	protected $inputs;
+	protected $filter;
 
 	use CreateRequestTrait;
 
@@ -46,6 +47,13 @@ abstract class AbstractInputTest extends TestCase
 			return [];
 		}
 
+		$filter = null;
+		if (isset($this->filter) && is_string($this->filter)) {
+			$filter = function ($file) {
+				return preg_match($this->filter, $file) !== 0;
+			};
+		}
+
 		$inputs = [];
 		foreach ($this->inputs as $cls => $data) {
 			$attributes = [];
@@ -56,7 +64,7 @@ abstract class AbstractInputTest extends TestCase
 				}
 			}
 			if (is_string($data)) {
-				$files = $this->getLoader()->getFiles($data);
+				$files = $this->getLoader()->getFiles($data, $filter);
 				foreach ($files as $file) {
 					$inputs[] = [
 						$cls,

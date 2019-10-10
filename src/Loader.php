@@ -19,5 +19,5 @@ interface Loader
 	 * @param string $data
 	 * @return string[]
 	 */
-	public function getFiles(string $data): array;
+	public function getFiles(string $data, ?callable $filter = null): array;
 }
