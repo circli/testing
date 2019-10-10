@@ -14,6 +14,15 @@ trait LoadResourceTrait
 		try {
 			return $this->getLoader()->loadJson($file);
 		}
+		catch (\JsonException $e) {
+			try {
+				return [$this->getLoader()->loadFile($file)];
+			}
+			catch (FileNotFound $e) {
+				$this->addWarning('Resource file not found: ' . $file);
+				return [];
+			}
+		}
 		catch (FileNotFound $e) {
 			$this->addWarning('Resource file not found: ' . $file);
 			return [];
