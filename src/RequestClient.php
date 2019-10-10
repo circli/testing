@@ -9,7 +9,7 @@ interface RequestClient
 	public const POST = 'post';
 	public const DELETE = 'delete';
 
-	public function doRequest(string $method, string $endpoint, array $payload);
+	public function doRequest(string $method, string $endpoint, array $payload = []);
 
 	public function getResponseCode(): int;
 }
