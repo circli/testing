@@ -16,6 +16,14 @@ interface Loader
 	public function loadRequest(string $file): array;
 
 	/**
+	 * Return path to file
+	 *
+	 * @param string $file
+	 * @return string
+	 */
+	public function getFile(string $file): string;
+
+	/**
 	 * @param string $data
 	 * @return string[]
 	 */

@@ -47,6 +47,7 @@ abstract class AbstractAutoEndpointTest extends AbstractEndpointTest
 			$this->autoEndpoint,
 			$this->loadResource($file)
 		);
+
 		$this->assertSame($returnStatus, $client->getResponseCode());
 		$this->assertResponseStructure($response, $client);
 	}

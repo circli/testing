@@ -48,6 +48,18 @@ final class DefaultLoader implements Loader
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function getFile(string $file): string
+	{
+		$path = $this->basePath . '/' . $file;
+		if (file_exists($path)) {
+			return $path;
+		}
+		throw new FileNotFound($path);
+	}
+
+	/**
 	 * @param string $path
 	 * @return string[]
 	 */
