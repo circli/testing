@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ $# -le 4 ]; then
-	echo "Usage: $0 host port tmpFolder sqliteDbFile"
+if [ $# -le 3 ]; then
+	echo "Usage: $0 host port tmpFolder sqliteDbFile initFile"
 	exit 1
 fi
 
