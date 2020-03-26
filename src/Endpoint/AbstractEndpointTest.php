@@ -10,6 +10,7 @@ abstract class AbstractEndpointTest extends TestCase
 	protected static $serverHost;
 	protected static $serverPort;
 	protected static $initScript;
+	protected static $shutdownScript;
 
 	private static $pid;
 	private static $db;
@@ -41,29 +42,29 @@ abstract class AbstractEndpointTest extends TestCase
 		$log = self::$tmpFolder . '/server.log';
 		$db = 'server-' . $_SERVER['REQUEST_TIME'] . '.db';
 
+		$commandFormat = '/bin/bash -c \'';
+		$commandFormat .= '%s %s %d %s %s';
+		$commandArgs = [
+			$script,
+			self::$serverHost,
+			self::$serverPort,
+			self::$tmpFolder,
+			$db
+		];
+
 		if (self::$initScript) {
-			// Command that starts the built-in web server
-			$command = sprintf(
-				"/bin/bash -c '%s %s %d %s %s %s > /dev/null 2>&1 &'",
-				$script,
-				self::$serverHost,
-				self::$serverPort,
-				self::$tmpFolder,
-				$db,
-				self::$initScript
-			);
+			$commandFormat .= ' %s';
+			$commandArgs[] = self::$initScript;
+
+			if (self::$shutdownScript) {
+				$commandFormat .= ' %s';
+				$commandArgs[] = self::$shutdownScript;
+			}
 		}
-		else {
-			// Command that starts the built-in web server
-			$command = sprintf(
-				"/bin/bash -c '%s %s %d %s %s > /dev/null 2>&1 &'",
-				$script,
-				self::$serverHost,
-				self::$serverPort,
-				self::$tmpFolder,
-				$db
-			);
-		}
+
+		$commandFormat .= ' > /dev/null 2>&1 &\'';
+
+		$command = vsprintf($commandFormat, $commandArgs);
 
 		// Execute the command and store the process ID
 		exec($command, $output, $ret);

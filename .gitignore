@@ -1,6 +1,3 @@
-.idea/
-.DS_Store
-
 ### Composer ###
-composer.phar
+composer.lock
 vendor/

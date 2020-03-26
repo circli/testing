@@ -14,6 +14,7 @@ db="$tmpFolder/$4"
 pidFile="$base/.pid"
 log="$tmpFolder/server.log"
 initFile=${5:-""}
+shutdownFile=${6:-""}
 
 if [ -f ${pidFile} ]; then
 	pid=$(cat ${pidFile})
@@ -40,4 +41,10 @@ if [ ! -d /proc/${pid} ]; then
 fi
 
 wait ${pid}
-rm ${db} ${pidFile} > /dev/null 2>&1
+rm ${pidFile} > /dev/null 2>&1
+
+if [ ! -z $shutdownFile ]; then
+  php $shutdownFile $db
+else
+  rm ${db} > /dev/null 2>&1
+fi
