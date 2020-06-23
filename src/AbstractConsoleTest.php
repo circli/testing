@@ -10,6 +10,8 @@ abstract class AbstractConsoleTest extends TestCase
 	protected static $initScript;
 	protected static $shutdownScript;
 
+	protected $beforeShutdown;
+
 	public function runProcess(Process $process): Process
 	{
 		$env = [
@@ -18,8 +20,11 @@ abstract class AbstractConsoleTest extends TestCase
 		if (self::$initScript && file_exists(self::$initScript)) {
 			Process::fromShellCommandline('php ' . self::$initScript, null, $env)->run();
 		}
+		$this->afterInit();
+
 		$process->run(null, $env);
 
+		$this->beforeShutdown();
 		if (self::$shutdownScript && file_exists(self::$shutdownScript)) {
 			Process::fromShellCommandline('php ' . self::$shutdownScript, null, $env)->run();
 		}
@@ -43,5 +48,18 @@ abstract class AbstractConsoleTest extends TestCase
 			$maxDepth--;
 		}
 		throw new \RuntimeException('console command not found');
+	}
+
+	protected function afterInit(): void
+	{
+
+	}
+
+	protected function beforeShutdown(): void
+	{
+		if ($this->beforeShutdown && is_callable($this->beforeShutdown)) {
+			$callback = $this->beforeShutdown;
+			$callback();
+		}
 	}
 }
