@@ -7,14 +7,15 @@ fi
 
 base=$(dirname "$(readlink -f "$0")")
 
-host=$1
-port=$2
-tmpFolder=$3
-db="$tmpFolder/$4"
+root=$1
+host=$2
+port=$3
+tmpFolder=$4
+db="$tmpFolder/$5"
 pidFile="$base/.pid"
 log="$tmpFolder/server.log"
-initFile=${5:-""}
-shutdownFile=${6:-""}
+initFile=${6:-""}
+shutdownFile=${7:-""}
 
 if [ -f ${pidFile} ]; then
 	pid=$(cat ${pidFile})
@@ -27,6 +28,7 @@ fi
 
 export TESTING_DB=${db}
 export TESTING_INIT_FILE=${initFile}
+export TESTING_SERVER_ROOT=${root}
 
 php -S ${host}:${port} -t ${base} >> ${log} 2>&1 &
 echo $! > ${pidFile}

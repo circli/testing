@@ -9,6 +9,7 @@ abstract class AbstractEndpointTest extends TestCase
 	protected static $tmpFolder = '/tmp';
 	protected static $serverHost;
 	protected static $serverPort;
+	protected static $serverRoot;
 	protected static $initScript;
 	protected static $shutdownScript;
 
@@ -21,6 +22,8 @@ abstract class AbstractEndpointTest extends TestCase
 		self::$serverHost = WEB_SERVER_HOST;
 		/** @noinspection PhpUndefinedConstantInspection */
 		self::$serverPort = WEB_SERVER_PORT;
+		/** @noinspection PhpUndefinedConstantInspection */
+		self::$serverRoot = WEB_SERVER_ROOT;
 		self::startServer();
 	}
 
@@ -43,9 +46,10 @@ abstract class AbstractEndpointTest extends TestCase
 		$db = 'server-' . $_SERVER['REQUEST_TIME'] . '.db';
 
 		$commandFormat = '/bin/bash -c \'';
-		$commandFormat .= '%s %s %d %s %s';
+		$commandFormat .= '%s %s %s %d %s %s';
 		$commandArgs = [
 			$script,
+			self::$serverRoot ?: '-',
 			self::$serverHost,
 			self::$serverPort,
 			self::$tmpFolder,
@@ -65,7 +69,6 @@ abstract class AbstractEndpointTest extends TestCase
 		$commandFormat .= ' > /dev/null 2>&1 &\'';
 
 		$command = vsprintf($commandFormat, $commandArgs);
-
 		// Execute the command and store the process ID
 		exec($command, $output, $ret);
 		// Need a little time to make sure the php server is up and running
