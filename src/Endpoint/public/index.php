@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 $maxDepth = 6;
 
 $autoloader = null;
-$extraRoot = getenv('TESTING_SERVER_ROOT') ?: '';
+$extraRoot = trim(getenv('TESTING_SERVER_ROOT') ?: '', '-');
 for ($i = 0; $i <= $maxDepth; $i++) {
 	$base = $i ? dirname(__DIR__, $i) : __DIR__;
 	$autoloader = $base . '/' . trim($extraRoot, '/') . '/vendor/autoload.php';

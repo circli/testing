@@ -22,8 +22,10 @@ abstract class AbstractEndpointTest extends TestCase
 		self::$serverHost = WEB_SERVER_HOST;
 		/** @noinspection PhpUndefinedConstantInspection */
 		self::$serverPort = WEB_SERVER_PORT;
-		/** @noinspection PhpUndefinedConstantInspection */
-		self::$serverRoot = WEB_SERVER_ROOT;
+		if (defined('WEB_SERVER_ROOT')) {
+			/** @noinspection PhpUndefinedConstantInspection */
+			self::$serverRoot = WEB_SERVER_ROOT;
+		}
 		self::startServer();
 	}
 
@@ -38,9 +40,15 @@ abstract class AbstractEndpointTest extends TestCase
 			return;
 		}
 
+
 		$public = __DIR__ . '/public';
 		$script = $public . '/start.sh';
 		$pidFile = $public . '/.pid';
+
+		if (exec('ps aux | grep "'.$script.'" | grep -v "grep "')) {
+			return;
+		}
+
 
 		$log = self::$tmpFolder . '/server.log';
 		$db = 'server-' . $_SERVER['REQUEST_TIME'] . '.db';
