@@ -41,7 +41,7 @@ abstract class AbstractEndpointTest extends TestCase
 
 		$server = new Server(
 			self::$serverHost,
-			self::$serverPort,
+			(int)self::$serverPort,
 			self::$tmpFolder,
 			self::$serverRoot ?: '-',
 			self::$initScript,

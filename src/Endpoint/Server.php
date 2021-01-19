@@ -46,10 +46,10 @@ final class Server
 
 		$public = __DIR__ . '/public';
 		$script = $public . '/start.sh';
-		$rootHash = substr($this->root, 0, 8);
+		$rootHash = substr(md5($this->root . PHP_EOL), 0, 8);
 		$pidFile = $public . '/' . $rootHash . '.pid';
 
-		if (exec('ps aux | grep "'.$script.'" | grep -v "grep "')) { //todo fix
+		if (exec('ps aux | grep "'.$script.'" | grep -v "grep " | grep "' . $this->root . '"')) {
 			return;
 		}
 
@@ -87,7 +87,7 @@ final class Server
 
 		$pid = \is_file($pidFile) ? (int)\file_get_contents($pidFile) : 0;
 		if (!$pid || !\is_dir("/proc/$pid")) {
-			throw new \RuntimeException("Could not start php server; See $log for details");
+			throw new \RuntimeException("Could not start php server; See {$this->log} for details");
 		}
 
 		/** @noinspection ForgottenDebugOutputInspection */
