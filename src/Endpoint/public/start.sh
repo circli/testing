@@ -14,7 +14,7 @@ port=$3
 tmpFolder=$4
 db="$tmpFolder/$5"
 pidFile="$base/$rootHash.pid"
-log="$tmpFolder/server.log"
+log="$tmpFolder/server.$rootHash.log"
 initFile=${6:-""}
 shutdownFile=${7:-""}
 
