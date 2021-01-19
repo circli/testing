@@ -8,11 +8,12 @@ fi
 base=$(dirname "$(readlink -f "$0")")
 
 root=$1
+rootHash=$(md5sum -t <<< "$root" | cut -c 1-8)
 host=$2
 port=$3
 tmpFolder=$4
 db="$tmpFolder/$5"
-pidFile="$base/.pid"
+pidFile="$base/$rootHash.pid"
 log="$tmpFolder/server.log"
 initFile=${6:-""}
 shutdownFile=${7:-""}
