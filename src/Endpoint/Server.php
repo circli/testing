@@ -22,6 +22,8 @@ final class Server
 
 	private $log;
 
+	private $haveDumpedLog = false;
+
 	public function __construct(
 		string $host,
 		int $port,
@@ -123,6 +125,17 @@ final class Server
 	public function getHost(): string
 	{
 		return $this->host;
+	}
+
+	public function dumpLog(): void
+	{
+		if ($this->haveDumpedLog) {
+			return;
+		}
+		echo 'Logs for: ' . $this->getHost() . "\n\n";
+		echo file_get_contents($this->getLog());
+		echo "\n\n---------------\n\n";
+		$this->haveDumpedLog = true;
 	}
 
 	public function stop()
