@@ -138,6 +138,16 @@ final class Server
 		$this->haveDumpedLog = true;
 	}
 
+	public function haveDumpedLog(): bool
+	{
+		return $this->haveDumpedLog;
+	}
+
+	public function getRoot(): ?string
+	{
+		return $this->root;
+	}
+
 	public function stop()
 	{
 		/** @noinspection ForgottenDebugOutputInspection */
