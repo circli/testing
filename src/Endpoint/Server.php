@@ -115,6 +115,16 @@ final class Server
 		return $this->db;
 	}
 
+	public function getLog()
+	{
+		return $this->log;
+	}
+
+	public function getHost(): string
+	{
+		return $this->host;
+	}
+
 	public function stop()
 	{
 		/** @noinspection ForgottenDebugOutputInspection */
