@@ -12,6 +12,7 @@ abstract class AbstractEndpointTest extends TestCase
 	protected static $serverRoot;
 	protected static $initScript;
 	protected static $shutdownScript;
+	protected static $waitTime;
 
 	/** @var Server[] */
 	protected static $servers = [];
@@ -47,6 +48,9 @@ abstract class AbstractEndpointTest extends TestCase
 			self::$initScript,
 			self::$shutdownScript
 		);
+		if (self::$waitTime) {
+			$server->waitTime = self::$waitTime;
+		}
 
 		$server->start();
 		self::$servers['auto'] = $server;

@@ -24,6 +24,8 @@ final class Server
 
 	private $haveDumpedLog = false;
 
+	public $waitTime = 4;
+
 	public function __construct(
 		string $host,
 		int $port,
@@ -85,7 +87,7 @@ final class Server
 		// Execute the command and store the process ID
 		exec($command, $output, $ret);
 		// Need a little time to make sure the php server is up and running
-		usleep(40000);
+		usleep($this->waitTime * 10000);
 
 		$pid = \is_file($pidFile) ? (int)\file_get_contents($pidFile) : 0;
 		if (!$pid || !\is_dir("/proc/$pid")) {
