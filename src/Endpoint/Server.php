@@ -129,6 +129,16 @@ final class Server
 		return $this->host;
 	}
 
+	public function getPort(): int
+	{
+		return $this->port;
+	}
+
+	public function getUrl(string $path = ''): string
+	{
+		return 'http://' . $this->host . ':' . $this->port . $path;
+	}
+
 	public function dumpLog(): void
 	{
 		if ($this->haveDumpedLog) {

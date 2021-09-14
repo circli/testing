@@ -16,6 +16,7 @@ abstract class AbstractEndpointTest extends TestCase
 
 	/** @var Server[] */
 	protected static $servers = [];
+	protected static $currentServer;
 
 	public static function setUpBeforeClass(): void
 	{
@@ -54,6 +55,7 @@ abstract class AbstractEndpointTest extends TestCase
 
 		$server->start();
 		self::$servers['auto'] = $server;
+		self::$currentServer = 'auto';
 	}
 
 	private static function resetData(): void
